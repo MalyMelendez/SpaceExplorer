@@ -22,20 +22,7 @@ public class App {
 
         String response = getAstronomyData(date);
 
-        JSONObject astronomyData = new JSONObject(response);
-
-        String title = astronomyData.getString("title");
-        String imageDate = astronomyData.getString("date");
-        String explanation = cleanExplanation(
-                astronomyData.getString("explanation"));
-        String imageURL = astronomyData.getString("hdurl");
-
-        System.out.println("\nSPACE EXPLORER");
-        System.out.println("-------------------------");
-        System.out.println("Title: " + title);
-        System.out.println("Date: " + imageDate);
-        System.out.println("Explanation: " + explanation);
-        System.out.println("Image URL: " + imageURL);
+        displayPicture(response);
 
         input.close();
     }
@@ -65,6 +52,24 @@ public class App {
             return "Error: " + response.statusCode();
         }
     }
+    public static void displayPicture(String response) {
+
+    JSONObject astronomyData = new JSONObject(response);
+
+    String title = astronomyData.getString("title");
+    String imageDate = astronomyData.getString("date");
+    String explanation = cleanExplanation(
+        astronomyData.getString("explanation"))
+        .replaceFirst("^Explanation:\\s*", "");
+    String imageURL = astronomyData.getString("hdurl");
+
+    System.out.println("\nSPACE EXPLORER");
+    System.out.println("-------------------------");
+    System.out.println("Title: " + title);
+    System.out.println("Date: " + imageDate);
+    System.out.println("Explanation: " + explanation);
+    System.out.println("Image URL: " + imageURL);
+}
 
     public static String cleanExplanation(String explanation) {
 
